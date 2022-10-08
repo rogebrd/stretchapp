@@ -22,7 +22,7 @@ export default function App() {
         <td>{stretch.name}</td>
         <td>{stretch.body_parts.join(', ')}</td>
         <td>{stretch.has_sides ? 'Yes' : 'No'}</td>
-        <td><img width='50px' height='50px' src={stretch.image}></img></td>
+        <td><img width='50px' height='50px' src={stretch.image} alt={stretch.name}></img></td>
       </tr>
     )
   }
@@ -42,7 +42,7 @@ export default function App() {
     if(!isStretching) {
       return;
     }
-    if(timeLeft == 0){
+    if(timeLeft === 0){
       if(isResting) {
         setIsResting(false);
         setTimeLeft(timePerStretch);
@@ -51,7 +51,7 @@ export default function App() {
         setTimeLeft(timeBetweenStretch);
         const newNumCompleted = numberOfStretchesCompleted + 1;
         setNumberOfStretchesCompleted(newNumCompleted);
-        if(newNumCompleted == numStretches){
+        if(newNumCompleted === numStretches){
           setIsStretching(false);
           return;
         } else {
@@ -66,7 +66,7 @@ export default function App() {
       }
     }
     setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-  }, [timeLeft]);
+  }, [timeLeft, currentStretchSideLeft, isResting, numStretches, numberOfStretchesCompleted, timeBetweenStretch, timePerStretch, isStretching, currentStretch.has_sides]);
 
 
   return (
@@ -100,7 +100,7 @@ export default function App() {
                   <h1>{timeLeft} seconds left</h1>
                   <h1>{currentStretch.body_parts.join(', ')}</h1>
                 </div>
-                <img width='150px' height='150px' src={currentStretch.image}></img>
+                <img width='150px' height='150px' src={currentStretch.image} alt={currentStretch.name}></img>
               </div>
             ) : (
               <div>
@@ -109,7 +109,7 @@ export default function App() {
                   <h1>{timeLeft} seconds left</h1>
                   <h1>Next Up: {currentStretch.name} {currentStretch.has_sides ? (currentStretchSideLeft ? '(L)' : '(R)') : ''}</h1>
                 </div>
-                <img width='150px' height='150px' src={currentStretch.image}></img>
+                <img width='150px' height='150px' src={currentStretch.image} alt={currentStretch.name}></img>
               </div>
             )}
           </div>
