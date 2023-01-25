@@ -4,9 +4,9 @@ import { stretches } from './stretches';
 
 export default function App() {
   // Stretch Configurations
-  const [numStretches, setNumStretches] = useState(5);
-  const [timePerStretch, setTimePerStretch] = useState(10);
-  const [timeBetweenStretch, setTimeBetweenStretch] = useState(5);
+  const [numStretches, setNumStretches] = useState(20);
+  const [timePerStretch, setTimePerStretch] = useState(20);
+  const [timeBetweenStretch, setTimeBetweenStretch] = useState(10);
 
   // Stretch State
   const [isStretching, setIsStretching] = useState(false);
@@ -15,6 +15,8 @@ export default function App() {
   const [timeLeft, setTimeLeft] = useState(timePerStretch);
   const [isResting, setIsResting] = useState(false);
   const [numberOfStretchesCompleted, setNumberOfStretchesCompleted] = useState(0);
+
+  const [stretchList, setStretchList] = useState([]);
 
   const getRow = (stretch) => {
     return (
@@ -27,15 +29,56 @@ export default function App() {
     )
   }
 
+  const buildStretchList = () => {
+    let allMuscles = Array.from(new Set(stretches.map((stretch) => stretch.body_parts).flat()));
+    const tempStretchList = [];
+    // TODO randomize order
+    while(tempStretchList.length < numStretches){
+      let firstPass = tempStretchList.length === 0;
+      // Sort array to be random
+      allMuscles = allMuscles.sort((a, b) => 0.5 - Math.random());
+      for(let i = 0; i < allMuscles.length; i++) {
+        if(tempStretchList.length < numStretches) {
+          const muscle = allMuscles[i];
+          if(firstPass && tempStretchList.map((stretch) => stretch.body_parts).flat().includes(muscle)){
+            continue;
+          }
+          const stretchesForMuscle = stretches.filter((stretch) => stretch.body_parts.includes(muscle));
+          let foundStretch = null;
+          // get random exercise from list
+          let numStretchesTried = 0;
+          while(foundStretch === null){
+            // try to add but don't if dup
+            const index = getRandomInt(stretchesForMuscle.length);
+            if(tempStretchList.includes(stretchesForMuscle[index])){
+              numStretchesTried++;
+              if(numStretchesTried === stretchesForMuscle.length){
+                break;
+              }
+            }else {
+              foundStretch = stretchesForMuscle[index];
+              // update num stretches in list
+            }
+          }
+          tempStretchList.push(foundStretch);
+        }
+      }
+    }
+    return tempStretchList
+  }
+
   const startStretching = () => {
+    const newStretchList = buildStretchList();
+    setStretchList(newStretchList)
     setIsStretching(true);
-    setTimeLeft(timePerStretch);
-    setCurrentStretch(stretches[getRandomInt()]);
+    setIsResting(true);
+    setTimeLeft(timeBetweenStretch);
+    setCurrentStretch(newStretchList[0]);
     setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
   }
 
-  const getRandomInt = () => {
-    return Math.floor(Math.random() * stretches.length);
+  const getRandomInt = (max) => {
+    return Math.floor(Math.random() * max);
   }
 
   useEffect(() => {
@@ -49,7 +92,11 @@ export default function App() {
       } else {
         setIsResting(true);
         setTimeLeft(timeBetweenStretch);
-        const newNumCompleted = numberOfStretchesCompleted + 1;
+        // only count second side as completion not the first
+        let newNumCompleted = numberOfStretchesCompleted
+        if((currentStretch.has_sides && !currentStretchSideLeft) || (!currentStretch.has_sides)) {
+          newNumCompleted = numberOfStretchesCompleted + 1;
+        }
         setNumberOfStretchesCompleted(newNumCompleted);
         if(newNumCompleted === numStretches){
           setIsStretching(false);
@@ -60,13 +107,14 @@ export default function App() {
             setCurrentStretchSideLeft(false);
           } else {
             setCurrentStretchSideLeft(true);
-            setCurrentStretch(stretches[getRandomInt()])
+            // use stretch list
+            setCurrentStretch(stretchList[newNumCompleted])
           }
         }
       }
     }
     setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-  }, [timeLeft, currentStretchSideLeft, isResting, numStretches, numberOfStretchesCompleted, timeBetweenStretch, timePerStretch, isStretching, currentStretch.has_sides]);
+  }, [timeLeft, currentStretchSideLeft, isResting, numStretches, numberOfStretchesCompleted, timeBetweenStretch, timePerStretch, isStretching, currentStretch.has_sides, stretchList]);
 
 
   return (
