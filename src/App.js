@@ -1,6 +1,8 @@
 import './App.css';
+import './styles/app.scss';
 import { useEffect, useState } from 'react';
 import { stretches } from './stretches';
+import { Settings } from './components/settings';
 
 export default function App() {
   // Stretch Configurations
@@ -32,7 +34,6 @@ export default function App() {
   const buildStretchList = () => {
     let allMuscles = Array.from(new Set(stretches.map((stretch) => stretch.body_parts).flat()));
     const tempStretchList = [];
-    // TODO randomize order
     while(tempStretchList.length < numStretches){
       let firstPass = tempStretchList.length === 0;
       // Sort array to be random
@@ -119,7 +120,8 @@ export default function App() {
 
   return (
     <div className="App">
-      <div>
+      <Settings />
+      {/* <div>
         <h1>Lets Stretch!</h1>
         <h1>Stretch Progress: {numberOfStretchesCompleted}/{numStretches}</h1>
       </div>
@@ -133,7 +135,18 @@ export default function App() {
             Time Between Stretches:
             <input value={timeBetweenStretch} onChange={(event) => setTimeBetweenStretch(parseInt(event.target.value))} type='number'></input>
             <h2>Stretch for {(((timePerStretch + timeBetweenStretch) * numStretches) / 60).toFixed(1)} minutes</h2>
+            <button onClick={() => buildStretchList()}>Generate Full-Body Stretch List</button>
             <button onClick={() => startStretching()}>Start Stretching</button>
+          </div>
+          <div>
+            <h2>Stretch List</h2>
+            {
+              stretchList.map((stretch) => (
+                <div>
+                  {stretch.name}
+                </div>
+              ))
+            }
           </div>
         </div>
         ) : null
@@ -160,6 +173,7 @@ export default function App() {
                 <img width='150px' height='150px' src={currentStretch.image} alt={currentStretch.name}></img>
               </div>
             )}
+            <button onClick={() => setIsStretching(false)}>Cancel</button>
           </div>
         ) : null
       }
@@ -183,7 +197,7 @@ export default function App() {
             return getRow(stretch);
           })}
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 }

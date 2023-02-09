@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Jaldi&display=swap');
+
+@mixin font-normal {
+    font-family: Jaldi;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 54px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+@mixin font-title {
+    font-family: Jaldi;
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 81px;
+    letter-spacing: 0em;
+    text-align: left;
+}

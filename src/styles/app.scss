@@ -1,0 +1,18 @@
+@import "colors.scss";
+@import "fonts.scss";
+
+html, .App, #root, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    @include font-normal;
+    background-color: $background-primary;
+    color: $text-primary;
+  }
+
+.App {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}

@@ -1,0 +1,66 @@
+@import "colors.scss";
+@import "fonts.scss";
+
+h3 {
+    display: inline;
+    padding: 0;
+    margin: 0;
+}
+
+.settings-container {
+    width: 700px;
+    height: 525px;
+    background-color: $background-secondary;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 32px;
+    margin: 0 auto;
+
+    .settings-title {
+        @include font-title;
+        height: 10%;
+        float: left;
+    }
+
+    .settings-options {
+        @include font-normal;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        &__option {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            input {
+                @include font-normal;
+                background-color: $background-input;
+                color: $text-primary;
+                width: 200px;
+                height: 36px;
+                margin: auto 0;
+                border-radius: 20px;
+                border: 0;
+                text-align: center;
+            }
+        }
+
+        &__summary {
+            color: $accent-secondary;
+        }
+    }
+
+    button {
+        @include font-normal;
+        text-align: center;
+        width: 375px;
+        height: 60px;
+        background-color: $accent-primary;
+        border: 0;
+        border-radius: 20px;
+        margin: 0 auto;
+    }
+}
