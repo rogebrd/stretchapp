@@ -2,11 +2,11 @@
 @import "fonts.scss";
 
 html, .App, #root, body {
+    @include font-normal;
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-    @include font-normal;
     background-color: $background-primary;
     color: $text-primary;
   }
@@ -15,4 +15,13 @@ html, .App, #root, body {
     display: flex;
     justify-content: center;
     flex-direction: column;
+}
+
+.title {
+    @include font-title;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    margin: 0 auto;
+    text-align: center;
 }

@@ -1,0 +1,36 @@
+@import "colors.scss";
+@import "fonts.scss";
+
+.stretch-panel-container {
+    width: 80%;
+    height: 70%;
+    background-color: $background-secondary;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 32px;
+    margin: 0 auto;
+    text-align: center;
+    
+    img {
+        margin: 0 auto;
+    }
+
+    .stretch-panel__title {
+        @include font-title;
+        text-align: center;
+        color: $accent-primary;
+    }
+
+    .stretch-panel__break {
+        @include font-title-large;
+        text-align: center;
+    }
+
+    .stretch-panel__footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
