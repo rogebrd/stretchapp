@@ -34,7 +34,7 @@ export const StretchPanel: FunctionComponent<StretchPanelProps> = ({secondsLeft,
                         </h1>
                         <h3>Up Next: {stretch.name}</h3>
                         <span className="stretch-panel__footer">
-                            <h2></h2>
+                            <span></span>
                             <h2>{stretchesComplete} / {totalStretches} Stretches Complete</h2>
                         </span>
                     </>
