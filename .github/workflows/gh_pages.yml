@@ -16,7 +16,7 @@ jobs:
           node-version: 16
       - name: Build App
         run: |
-          npm install
+          npm install --legacy-peer-deps
           npm run build
       - name: Push Documentation
         uses: JamesIves/github-pages-deploy-action@releases/v3
