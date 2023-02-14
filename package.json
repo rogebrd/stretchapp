@@ -1,7 +1,7 @@
 {
   "name": "stretch-app",
   "version": "0.1.0",
-  "homepage": "https://rogebrd.github.io/stretchapp",
+  "homepage": "https://stretchy.ninja",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
